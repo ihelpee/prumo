@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 330" width="760" height="330" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Drift copies itself</title>
+  <desc id="d">A generated list of Roman numerals. One line drifts; the following lines copy the drift because the previous line is the strongest evidence in the context. Each line is a valid numeral, so only reading the set reveals the defect.</desc>
+  <rect width="760" height="330" rx="12" fill="#ffffff"/>
+  <text x="32" y="38" font-size="17" font-weight="600" fill="#1f2328">Drift copies itself</text>
+  <text x="32" y="60" font-size="13" fill="#57606a">The model continues the pattern in its own context. Once a line drifts, the next lines copy it.</text>
+
+  <!-- column of generated lines -->
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="13">
+    <rect x="32" y="80" width="330" height="26" rx="5" fill="#f6f8fa" stroke="#d0d7de"/>
+    <text x="44" y="98" fill="#1f2328">350 = CCCL</text>
+    <text x="350" y="98" text-anchor="end" fill="#1a7f37">✓</text>
+
+    <rect x="32" y="112" width="330" height="26" rx="5" fill="#f6f8fa" stroke="#d0d7de"/>
+    <text x="44" y="130" fill="#1f2328">351 = CCCLI</text>
+    <text x="350" y="130" text-anchor="end" fill="#1a7f37">✓</text>
+
+    <rect x="32" y="144" width="330" height="26" rx="5" fill="#fff1f0" stroke="#cf222e"/>
+    <text x="44" y="162" fill="#cf222e">352 = CCCCLII</text>
+    <text x="350" y="162" text-anchor="end" fill="#cf222e">drift</text>
+
+    <rect x="32" y="176" width="330" height="26" rx="5" fill="#fff1f0" stroke="#cf222e"/>
+    <text x="44" y="194" fill="#cf222e">353 = CCCCLIII</text>
+    <text x="350" y="194" text-anchor="end" fill="#cf222e">copied</text>
+
+    <rect x="32" y="208" width="330" height="26" rx="5" fill="#fff1f0" stroke="#cf222e"/>
+    <text x="44" y="226" fill="#cf222e">354 = CCCCLIV</text>
+    <text x="350" y="226" text-anchor="end" fill="#cf222e">copied</text>
+
+    <rect x="32" y="240" width="330" height="26" rx="5" fill="#fff1f0" stroke="#cf222e"/>
+    <text x="44" y="258" fill="#cf222e">355 = CCCCLV</text>
+    <text x="350" y="258" text-anchor="end" fill="#cf222e">copied</text>
+  </g>
+
+  <!-- copy arrows -->
+  <g stroke="#cf222e" stroke-width="1.5" fill="none">
+    <path d="M 372 158 C 392 162, 392 186, 372 190" marker-end="url(#ar)"/>
+    <path d="M 372 190 C 392 194, 392 218, 372 222" marker-end="url(#ar)"/>
+    <path d="M 372 222 C 392 226, 392 250, 372 254" marker-end="url(#ar)"/>
+  </g>
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#cf222e"/>
+    </marker>
+    <marker id="ag" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0969da"/>
+    </marker>
+  </defs>
+
+  <!-- explanation -->
+  <g font-size="13">
+    <rect x="420" y="80" width="308" height="86" rx="8" fill="#f6f8fa" stroke="#d0d7de"/>
+    <text x="436" y="104" font-weight="600" fill="#1f2328">Every line is still valid</text>
+    <text x="436" y="126" fill="#57606a">CCCCLIII is a well-formed numeral.</text>
+    <text x="436" y="146" fill="#57606a">No local check reveals the defect.</text>
+
+    <rect x="420" y="180" width="308" height="86" rx="8" fill="#ddf4ff" stroke="#0969da"/>
+    <text x="436" y="204" font-weight="600" fill="#0969da">A fresh context catches it</text>
+    <text x="436" y="226" fill="#1f2328">Reading the lines as data, not continuing</text>
+    <text x="436" y="246" fill="#1f2328">them, exposes all 14 errors in 1,000.</text>
+  </g>
+
+  <text x="32" y="300" font-size="12" fill="#57606a">In code: a controller without a guard becomes the template for the next one, and tests written</text>
+  <text x="32" y="318" font-size="12" fill="#57606a">in the same context repeat the same belief.</text>
+</svg>

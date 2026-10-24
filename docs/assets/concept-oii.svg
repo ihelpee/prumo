@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 350" width="760" height="350" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">OII is an intersection</title>
+  <desc id="d">A test file counts as independent only if it passes every active criterion: it does not import src, the commit that added it did not touch src, and it fails on an induced mutation. Example: of four test files, only one passes all three, so the OII is one in four, 25 percent.</desc>
+  <rect width="760" height="350" rx="12" fill="#ffffff"/>
+  <text x="32" y="38" font-size="17" font-weight="600" fill="#1f2328">OII is an intersection, not an average</text>
+  <text x="32" y="60" font-size="13" fill="#57606a">A test file is independent only if it passes every active criterion.</text>
+
+  <!-- header -->
+  <g font-size="12" font-weight="600" fill="#57606a">
+    <text x="32" y="98">test file</text>
+    <text x="300" y="92" text-anchor="middle">1 · no import</text>
+    <text x="300" y="106" text-anchor="middle">of src/ (AST)</text>
+    <text x="430" y="92" text-anchor="middle">2 · added without</text>
+    <text x="430" y="106" text-anchor="middle">touching src/ (git)</text>
+    <text x="560" y="92" text-anchor="middle">3 · fails on an</text>
+    <text x="560" y="106" text-anchor="middle">induced mutation</text>
+    <text x="680" y="98" text-anchor="middle">independent</text>
+  </g>
+  <line x1="32" y1="116" x2="728" y2="116" stroke="#d0d7de"/>
+
+  <g font-size="13">
+    <!-- row helper: y baseline -->
+    <text x="32" y="142" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2328">orders.contract.spec.ts</text>
+    <text x="300" y="142" text-anchor="middle" fill="#1a7f37">✓</text>
+    <text x="430" y="142" text-anchor="middle" fill="#1a7f37">✓</text>
+    <text x="560" y="142" text-anchor="middle" fill="#1a7f37">✓</text>
+    <rect x="645" y="126" width="70" height="24" rx="12" fill="#dafbe1"/>
+    <text x="680" y="142" text-anchor="middle" font-weight="600" fill="#1a7f37">yes</text>
+
+    <text x="32" y="178" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2328">orders.service.spec.ts</text>
+    <text x="300" y="178" text-anchor="middle" fill="#cf222e">✗</text>
+    <text x="430" y="178" text-anchor="middle" fill="#8c959f">—</text>
+    <text x="560" y="178" text-anchor="middle" fill="#8c959f">—</text>
+    <rect x="645" y="162" width="70" height="24" rx="12" fill="#fff1f0"/>
+    <text x="680" y="178" text-anchor="middle" font-weight="600" fill="#cf222e">no</text>
+
+    <text x="32" y="214" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2328">refund.spec.ts</text>
+    <text x="300" y="214" text-anchor="middle" fill="#1a7f37">✓</text>
+    <text x="430" y="214" text-anchor="middle" fill="#cf222e">✗</text>
+    <text x="560" y="214" text-anchor="middle" fill="#8c959f">—</text>
+    <rect x="645" y="198" width="70" height="24" rx="12" fill="#fff1f0"/>
+    <text x="680" y="214" text-anchor="middle" font-weight="600" fill="#cf222e">no</text>
+
+    <text x="32" y="250" font-family="ui-monospace, SFMono-Regular, Menlo, monospace" fill="#1f2328">fees.spec.ts</text>
+    <text x="300" y="250" text-anchor="middle" fill="#1a7f37">✓</text>
+    <text x="430" y="250" text-anchor="middle" fill="#1a7f37">✓</text>
+    <text x="560" y="250" text-anchor="middle" fill="#cf222e">✗</text>
+    <rect x="645" y="234" width="70" height="24" rx="12" fill="#fff1f0"/>
+    <text x="680" y="250" text-anchor="middle" font-weight="600" fill="#cf222e">no</text>
+  </g>
+  <line x1="32" y1="268" x2="728" y2="268" stroke="#d0d7de"/>
+
+  <text x="32" y="294" font-size="14" font-weight="600" fill="#1f2328">OII = 1 / 4 = 25%</text>
+  <text x="32" y="316" font-size="12" fill="#57606a">Three files look mostly fine, yet one failed criterion is enough to make a test unable to catch the defect.</text>
+  <text x="32" y="334" font-size="12" fill="#57606a">— = not needed once a criterion fails.</text>
+</svg>

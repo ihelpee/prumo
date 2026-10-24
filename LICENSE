@@ -1,0 +1,51 @@
+Prumo Software License
+
+Copyright (c) 2026 IHELPEE TECNOLOGIA LTDA (https://ihelpee.com). All rights reserved.
+
+This license applies to Prumo version 0.17.0 and later: the @ihelpee/prumo
+package, its plugins and i18n packages, and their documentation (the
+"Software"). Versions published before 0.17.0 remain under the license each
+one was published with (MIT or Apache-2.0); this license does not change them.
+
+1. Grant. IHELPEE TECNOLOGIA LTDA ("IHELPEE") grants you a free,
+   non-exclusive, non-transferable, revocable license to install and run the
+   Software, as published by IHELPEE, to check your own projects. Your
+   projects may be commercial: a company may use the Software on the code of
+   the products it sells.
+
+2. Commercial exploitation is reserved. Only IHELPEE may make money from the
+   Software itself. Unless IHELPEE agrees in writing, you may not charge for,
+   or receive any payment or other consideration for, the Software or any
+   product or service whose value comes mainly from it, such as reselling
+   it, bundling it, hosting it, or paid consulting, training, support,
+   setup or certification built on it.
+
+3. Restrictions. Unless IHELPEE agrees in writing, you may not:
+   a. copy, modify, translate or create derivative works of the Software,
+      except copies made by installing and running it;
+   b. redistribute, sell, sublicense, rent or publish the Software, alone or
+      as part of another product;
+   c. offer the Software, or a substantial part of its functionality, to
+      third parties as a hosted or managed service;
+   d. reverse engineer, decompile or disassemble the Software, except where
+      the law allows it despite this restriction;
+   e. remove or alter any copyright, trademark or license notice.
+
+4. Trademarks. This license grants no right to the "Prumo" name, logo or
+   other marks. See docs/TRADEMARK.md.
+
+5. Termination. This license ends automatically if you breach it. On
+   termination you must stop using the Software and delete your copies.
+
+6. No warranty. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+   KIND, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A
+   PARTICULAR PURPOSE AND NON-INFRINGEMENT.
+
+7. Limitation of liability. TO THE EXTENT PERMITTED BY LAW, IHELPEE IS NOT
+   LIABLE FOR ANY DAMAGES ARISING FROM THE USE OF, OR INABILITY TO USE, THE
+   SOFTWARE.
+
+8. Governing law. This license is governed by the laws of the Federative
+   Republic of Brazil.
+
+Other licensing: alexgotardi@gmail.com

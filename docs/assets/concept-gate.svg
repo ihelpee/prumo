@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 414" width="760" height="414" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Where Prumo sits</title>
+  <desc id="d">Humans write the intent and freeze the contract. The oracle is derived from intent and contract; the agent writes src against the contract. The oracle may not import src. The prumo gate checks oracle isolation, whole-tree invariants and the OII budget, and gives a deterministic verdict with no model on the path.</desc>
+  <defs>
+    <marker id="a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#57606a"/>
+    </marker>
+    <marker id="g" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8250df"/>
+    </marker>
+  </defs>
+  <rect width="760" height="414" rx="12" fill="#ffffff"/>
+  <text x="32" y="38" font-size="17" font-weight="600" fill="#1f2328">Where Prumo sits</text>
+  <text x="32" y="60" font-size="13" fill="#57606a">Each artifact has its own source of authority. The gate checks that they stay apart.</text>
+
+  <!-- human row -->
+  <text x="32" y="92" font-size="11" font-weight="600" fill="#57606a" letter-spacing="0.5">HUMANS</text>
+  <rect x="32" y="100" width="170" height="54" rx="8" fill="#f6f8fa" stroke="#1f2328"/>
+  <text x="117" y="122" font-size="13" text-anchor="middle" font-weight="600" fill="#1f2328">Intent</text>
+  <text x="117" y="140" font-size="11" text-anchor="middle" fill="#57606a">.prumo/intent · what it must do</text>
+
+  <rect x="232" y="100" width="170" height="54" rx="8" fill="#f6f8fa" stroke="#1f2328"/>
+  <text x="317" y="122" font-size="13" text-anchor="middle" font-weight="600" fill="#1f2328">Contract (frozen)</text>
+  <text x="317" y="140" font-size="11" text-anchor="middle" fill="#57606a">.prumo/contract · DTOs, types</text>
+  <line x1="202" y1="127" x2="230" y2="127" stroke="#57606a" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- derived row -->
+  <text x="32" y="196" font-size="11" font-weight="600" fill="#57606a" letter-spacing="0.5">DERIVED</text>
+  <rect x="32" y="204" width="170" height="54" rx="8" fill="#f0f7ff" stroke="#0969da"/>
+  <text x="117" y="226" font-size="13" text-anchor="middle" font-weight="600" fill="#1f2328">oracle/</text>
+  <text x="117" y="244" font-size="11" text-anchor="middle" fill="#57606a">from intent + contract</text>
+
+  <rect x="232" y="204" width="170" height="54" rx="8" fill="#fff8f0" stroke="#d4a72c"/>
+  <text x="317" y="226" font-size="13" text-anchor="middle" font-weight="600" fill="#1f2328">src/</text>
+  <text x="317" y="244" font-size="11" text-anchor="middle" fill="#57606a">the agent, against the contract</text>
+
+  <line x1="117" y1="154" x2="117" y2="202" stroke="#57606a" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="290" y1="154" x2="150" y2="202" stroke="#57606a" stroke-width="1.5" marker-end="url(#a)"/>
+  <line x1="317" y1="154" x2="317" y2="202" stroke="#57606a" stroke-width="1.5" marker-end="url(#a)"/>
+
+  <!-- forbidden import -->
+  <line x1="202" y1="231" x2="230" y2="231" stroke="#cf222e" stroke-width="2" stroke-dasharray="4 3"/>
+  <circle cx="216" cy="231" r="9" fill="#ffffff" stroke="#cf222e" stroke-width="2"/>
+  <text x="216" y="235.5" font-size="12" font-weight="700" text-anchor="middle" fill="#cf222e">✕</text>
+  <text x="217" y="282" font-size="11" text-anchor="middle" fill="#cf222e">oracle/ must not import src/</text>
+
+  <rect x="32" y="300" width="370" height="54" rx="8" fill="#f6f8fa" stroke="#57606a" stroke-dasharray="5 3"/>
+  <text x="217" y="322" font-size="13" text-anchor="middle" font-weight="600" fill="#1f2328">Invariants</text>
+  <text x="217" y="340" font-size="11" text-anchor="middle" fill="#57606a">properties of the whole tree: "no mutation route without a guard"</text>
+
+  <!-- gate -->
+  <rect x="470" y="100" width="258" height="254" rx="10" fill="#fbf7ff" stroke="#8250df" stroke-width="1.5"/>
+  <text x="599" y="128" font-size="15" text-anchor="middle" font-weight="700" fill="#8250df">prumo gate</text>
+  <text x="599" y="146" font-size="11" text-anchor="middle" fill="#57606a">deterministic · no model on the path</text>
+
+  <g font-size="12" fill="#1f2328">
+    <rect x="490" y="162" width="218" height="32" rx="6" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="504" y="183">oracle-isolation <tspan fill="#57606a">· import graph</tspan></text>
+    <rect x="490" y="202" width="218" height="32" rx="6" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="504" y="223">invariants <tspan fill="#57606a">· AST, whole tree</tspan></text>
+    <rect x="490" y="242" width="218" height="32" rx="6" fill="#ffffff" stroke="#d0d7de"/>
+    <text x="504" y="263">OII budget <tspan fill="#57606a">· independence ratio</tspan></text>
+  </g>
+  <rect x="490" y="290" width="104" height="44" rx="8" fill="#dafbe1" stroke="#1a7f37"/>
+  <text x="542" y="317" font-size="14" text-anchor="middle" font-weight="700" fill="#1a7f37">PASS</text>
+  <rect x="604" y="290" width="104" height="44" rx="8" fill="#fff1f0" stroke="#cf222e"/>
+  <text x="656" y="317" font-size="14" text-anchor="middle" font-weight="700" fill="#cf222e">FAIL</text>
+
+  <path d="M 402 231 L 466 231" stroke="#8250df" stroke-width="1.5" fill="none" marker-end="url(#g)"/>
+  <path d="M 402 327 L 466 327" stroke="#8250df" stroke-width="1.5" fill="none" marker-end="url(#g)"/>
+  <path d="M 402 127 L 466 127" stroke="#8250df" stroke-width="1.5" fill="none" marker-end="url(#g)"/>
+
+  <text x="32" y="382" font-size="12" fill="#57606a">Tests, tsc and linters answer "is this well-formed?".</text>
+  <text x="32" y="400" font-size="12" fill="#57606a">The gate answers "is it consistent with its siblings and with the intent?".</text>
+</svg>
