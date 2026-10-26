@@ -1,5 +1,11 @@
 # @ihelpee/prumo
 
+## 0.18.2
+
+### Patch Changes
+
+- 52873fb: Prepare lockstep package versions through automated release pull requests and publish only from validated version tags.
+
 ## 0.18.1
 
 ### Patch Changes
