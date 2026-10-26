@@ -7,7 +7,7 @@ testes que só repetem o que o código já faz e aplica regras estruturais que t
 enxergam.
 
 [![npm](https://img.shields.io/npm/v/@ihelpee/prumo?label=npm)](https://www.npmjs.com/package/@ihelpee/prumo)
-[![License](https://img.shields.io/badge/License-proprietary-lightgrey.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-proprietary-lightgrey.svg)](packages/core/LICENSE.md)
 
 [English](README.md) · A documentação detalhada é em inglês.
 
@@ -185,7 +185,7 @@ commitados separados do código que verificam, e `pnpm selftest` precisa passar.
 
 ## Licença
 
-Software proprietário: [Prumo Software License](LICENSE), a partir da versão 0.17.0. Versões anteriores
-mantêm a licença com que foram publicadas (MIT ou Apache-2.0). O nome e a marca Prumo não estão cobertos pela licença do
+Cada pacote publicado tem seus próprios termos em seu arquivo [LICENSE.md](packages/core/LICENSE.md), aplicáveis apenas
+a versões que incluam esse arquivo. Versões anteriores mantêm a licença publicada. O nome e a marca Prumo não estão cobertos pela licença do
 código; veja [TRADEMARK](docs/TRADEMARK.md). Mantido por
 [Alex Gotardi](https://github.com/alexgotardi) · IHELPEE TECNOLOGIA LTDA.

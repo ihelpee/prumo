@@ -6,7 +6,7 @@ A deterministic CI gate for codebases written with AI agents. It finds tests tha
 what the code already does, and it enforces structural rules that unit tests cannot see.
 
 [![npm](https://img.shields.io/npm/v/@ihelpee/prumo?label=npm)](https://www.npmjs.com/package/@ihelpee/prumo)
-[![License](https://img.shields.io/badge/License-proprietary-lightgrey.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-proprietary-lightgrey.svg)](packages/core/LICENSE.md)
 
 [Português (Brasil)](README.pt-BR.md)
 
@@ -182,7 +182,7 @@ apart from the code they verify, and `pnpm selftest` must pass.
 
 ## License
 
-Proprietary software: [Prumo Software License](LICENSE), from version 0.17.0. Earlier versions keep
-the license they were published with (MIT or Apache-2.0). The Prumo name and brand: see
+Each published package has its own terms in its [package LICENSE.md](packages/core/LICENSE.md); these apply only
+to releases that include that file. Earlier releases retain their published license. The Prumo name and brand: see
 [TRADEMARK](docs/TRADEMARK.md). Maintained by [Alex Gotardi](https://github.com/alexgotardi) ·
 IHELPEE TECNOLOGIA LTDA.

@@ -53,6 +53,6 @@ prumo gate --lang pt-BR
 Copyright © 2026 **IHELPEE TECNOLOGIA LTDA** (<https://ihelpee.com>). All rights reserved.
 Created and authored by [Alex Gotardi](https://github.com/alexgotardi).
 
-Proprietary software, © IHELPEE TECNOLOGIA LTDA. From version 0.17.0, use is governed by the [Prumo Software License](https://github.com/ihelpee/prumo/blob/main/LICENSE); earlier versions keep the license they were published with.
+Proprietary software, © IHELPEE TECNOLOGIA LTDA. From version 0.17.0, use is governed by the [Prumo Software License](https://github.com/ihelpee/prumo/blob/main/packages/i18n-pt-br/LICENSE.md); earlier versions keep the license they were published with.
 
 The **"Prumo"** name and logo are trademarks of IHELPEE TECNOLOGIA LTDA and are **not** licensed under the software license.

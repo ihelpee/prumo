@@ -52,4 +52,4 @@ export default defineConfig({
 
 Copyright © 2026 **IHELPEE TECNOLOGIA LTDA** (<https://ihelpee.com>). Created and authored by [Alex Gotardi](https://github.com/alexgotardi).
 
-Proprietary software, © IHELPEE TECNOLOGIA LTDA. From version 0.17.0, use is governed by the [Prumo Software License](https://github.com/ihelpee/prumo/blob/main/LICENSE); earlier versions keep the license they were published with.
+Proprietary software, © IHELPEE TECNOLOGIA LTDA. From version 0.17.0, use is governed by the [Prumo Software License](https://github.com/ihelpee/prumo/blob/main/packages/plugin-node-nest/LICENSE.md); earlier versions keep the license they were published with.

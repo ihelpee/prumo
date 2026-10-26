@@ -8,9 +8,9 @@ This page is **legal and commercial**. Technical behavior of the software is doc
 |---|---|
 | **Copyright holder** | IHELPEE TECNOLOGIA LTDA · [ihelpee.com](https://ihelpee.com) |
 | **Author & maintainer** | [Alex Gotardi](https://github.com/alexgotardi) |
-| **Software license** | [Prumo Software License](../LICENSE) (proprietary), from version 0.17.0 · see [`NOTICE`](../NOTICE) |
+| **Software license** | Each published package has its own [`LICENSE.md`](../packages/core/LICENSE.md) · see [`NOTICE`](../NOTICE) |
 
-From version 0.17.0 anyone may install and run Prumo for free to check their own projects, including a company's commercial products. Only IHELPEE may make money from Prumo itself: no reselling, hosting, bundling, or paid services built on it, and no copying, modifying or redistributing it. The [LICENSE](../LICENSE) has the terms. Versions published before 0.17.0 keep the license they were published with (MIT or Apache-2.0).
+Package versions that include their `LICENSE.md` may be used in development dependencies, CI, and commercial projects, and the resulting software products may be sold or hosted without royalties to IHELPEE. The licenses restrict redistribution of the official packages themselves and offering Prumo's gate as a standalone competing hosted service. Independent plugins using documented interfaces may be commercialized if they do not reproduce proprietary package code. The relevant package's `LICENSE.md` states its terms (for example, [core](../packages/core/LICENSE.md), [TypeScript plugin](../packages/plugin-typescript/LICENSE.md), and [Nest plugin](../packages/plugin-node-nest/LICENSE.md)). Previously published package versions retain the license distributed with that release.
 
 ## Trademark
 
@@ -23,6 +23,6 @@ You may **not**:
 - Remove or alter [`NOTICE`](../NOTICE) and required copyright credits in redistribution
 - Imply endorsement or sponsorship by IHELPEE without permission
 
-**In short:** from 0.17.0 the software is proprietary; the name and brand were never licensed.
+**In short:** package-specific license files govern the releases that include them; the name and brand are not licensed.
 
 Contact: [alexgotardi@gmail.com](mailto:alexgotardi@gmail.com)
