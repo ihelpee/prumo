@@ -13,9 +13,6 @@ All packages live in `packages/` and are versioned in lockstep.
 | `@ihelpee/prumo-plugin-node-nest` | `plugin-node-nest` | NestJS invariants (guards, DTO validation, module exports, feature boundaries) |
 | `@ihelpee/prumo-plugin-node-next` | `plugin-node-next` | Next.js invariants |
 | `@ihelpee/prumo-plugin-node-jest` | `plugin-node-jest` | Jest test-audit and test patterns |
-| `@ihelpee/prumo-plugin-php-laravel` | `plugin-php-laravel` | Laravel invariants (PHP parser subprocess) |
-| `@ihelpee/prumo-plugin-python-fastapi` | `plugin-python-fastapi` | FastAPI invariants (Python parser subprocess) |
-| `@ihelpee/prumo-plugin-go-gin` | `plugin-go-gin` | Gin invariants (Go extractor) |
 | `@ihelpee/prumo-plugin-speckit` | `plugin-speckit` | spec interviewer, Prompt Zero catalog, phase status (experimental) |
 | `@ihelpee/prumo-plugin-github-project` | `plugin-github-project` | thin GitHub Projects/Issues client (experimental) |
 | `@ihelpee/prumo-plugin-pipeline` | `plugin-pipeline` | session timeline and preflight gates for GitHub mutations (experimental) |
@@ -23,11 +20,20 @@ All packages live in `packages/` and are versioned in lockstep.
 
 Each plugin's design spec, where one exists, is `DESIGN.md` in its package directory.
 
+## Governance ownership
+
+The monorepo root `.prumo/` owns rules that apply across packages: the constitution, roadmap,
+workspace invariants, plugin-wide verification policy, and repository-level exceptions. The Prumo
+core package owns its product intent and frozen contracts in `packages/core/.prumo/`, with its
+own `prumo.config.ts`. CI runs both gates: the root gate aggregates workspace rules and intents,
+and the core gate runs from `packages/core` so frozen-contract ledger paths remain relative to
+their owner. Framework plugins keep their own `.prumo/` governance inside their package.
+
 **Scope.** The gate, the OII and the framework plugins are the product. The workflow plugins
 (speckit, pipeline, github-project) are experimental: new work there waits until the core
 checks are validated on more real projects (see [verification.md](verification.md#external-validation)).
 
-## Core layout (`packages/prumo/src`)
+## Core layout (`packages/core/src`)
 
 | Directory | Contents |
 |---|---|
@@ -135,11 +141,12 @@ plugins run against the same context.
 ## Tests
 
 The repository tests itself with **oracles**, not unit tests: scripts in `oracle/` that run the
-built bin (`packages/*/dist`) as a subprocess against fixtures in `fixtures/`, and never import
+built bin (`packages/*/dist`) as a subprocess against fixtures in `packages/core/fixtures/`, and never import
 `packages/*/src`. `scripts/run-oracles.mjs` runs them by scope: `core` tests only the core;
-each plugin has its own scope (`nest`, `jest`, `next`, `speckit`, `pipeline`, `github-project`,
-`php`, `python`, `go`), and `plugins` covers the cross-plugin contract. In CI, `core` runs in the
-build job and every other scope in its own job. The repository's own gate (`pnpm gate:dist`)
+the active plugin scopes are `nest`, `jest`, `next`, `speckit`, `pipeline` and `github-project`,
+and `plugins` covers the cross-plugin contract. The Go, PHP and Python language-plugin scopes are
+currently frozen and omitted until those plugins are revived. In CI, `core` runs in the build job
+and every other active scope in its own job. The repository's own gate (`pnpm gate:dist`)
 enforces this.
 
 ### Mutation engine
@@ -147,4 +154,4 @@ enforces this.
 `core/mutation/` mutates only lines changed in the PR delta (operator set P0+P1). It has a
 global budget (`timeoutMs`, `maxMutants`, `maxPerFile`) and fails open to `inconclusive` when the
 budget runs out. The full design is in
-[packages/prumo/MUTATION.md](mutation.md).
+[mutation.md](mutation.md).

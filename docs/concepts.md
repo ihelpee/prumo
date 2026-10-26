@@ -5,8 +5,6 @@ The first two sections need no programming background.
 
 ## Prumo in one minute
 
-![A robot lays a leaning brick wall while a mason holds a plumb line beside it, showing the lean](assets/prumo-concept.jpg)
-
 *Prumo* is Portuguese for plumb line: a string with a weight that hangs straight down. A mason
 holds it next to a wall to see if the wall leans. The wall cannot fool it, because the line does
 not come from the wall.

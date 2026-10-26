@@ -1,5 +1,77 @@
 # @ihelpee/prumo
 
+## 0.18.1
+
+### Patch Changes
+
+- Automatic version from conventional commits:
+  
+  - fix(ci): align release oracle and plugin docs links (2251ff7)
+  - fix(docs): mirror plugin guides to GitHub (a6ba5da)
+
+## 0.18.0
+
+### Minor Changes
+
+- Automatic version from conventional commits:
+  
+  - feat(intent): approve the speckit interview rules with explicit ids and freeze their contract (fe39726)
+  - feat(intent): approve the core intents that describe current behavior, with rule ids and frozen contracts (b8a5b11)
+  - feat(intent): approve the setup multi-agent intent and freeze its contract (e4af9fb)
+  - feat(intent): approve the intents of the remaining capabilities and freeze their contracts (9d9562d)
+  - feat(intent): allowed — write permission rules, approved and frozen (R-allowed-001, 002) (166fe5b)
+  - refactor(setup): the recommended answers of the interview after setup come from core (eb23612)
+  - refactor(plugin): the plugin package inspection lives in core/capabilities.ts (d8ca93e)
+  - refactor(contract freeze): the freeze logic lives in core/capabilities.ts; the CLI only prints (cf07897)
+  - refactor(contract ratify): the copy lives in core/capabilities.ts (5feb670)
+  - refactor(fix): the CLI and the MCP server call one context fix function (1ada5da)
+  - refactor(coverage): the CLI and the MCP server call one context coverage function (7e629ed)
+  - refactor(drift): the CLI and the MCP server call one context drift function (3d743ca)
+  - refactor(budget): the CLI and the MCP server call one context budget function (48e6c6b)
+  - refactor(check): the CLI and the MCP server call one context check function (2ed193c)
+  - refactor(findings): read the last report through the shared reader (dbd82fe)
+  - refactor(badge): read the last report through the shared reader (7597ec4)
+  - refactor(orient): the CLI and the MCP server call one payload function (7b2263c)
+  - refactor(mcp): tools/list is built from the capability registry (R-prumo-inv-002, step 1) (aca8b69)
+  - refactor(mcp): tool definitions live in cli/mcp-tools.ts; the server serves them unchanged (e5be46d)
+  - fix(setup): a fresh project passes sync; no sample intent, no path-like placeholders (ee79033)
+  - feat(mcp): prumo_report, prumo_findings and prumo_contract_extract on shared services (b56b2ed)
+  - feat(core): each capability declares where it belongs (both, mcp, cli, both-proposed) (580c825)
+  - feat(core): capability registry as data, one row per CLI command and MCP tool (R-prumo-inv-002, first slice) (cd01ac4)
+  - feat(core): reserved core command names block plugin ids (R-prumo-inv-003) (3548946)
+  - feat(core): plugin ids and collisions go through the identity rule (R-prumo-inv-003) (1f4cf96)
+  - feat(core): plugin identity derived from the npm name (R-prumo-inv-003) (d486190)
+  - fix(mcp): describe prumo_test_prune as preview-first (approved by the user) (e0b5173)
+  - fix(ci): stop the gate failing on rules that have no oracle yet (e9b61a5)
+  - fix(ci): point the jest benchmark and the interview oracle at existing files (986471b)
+  - fix(ci): point build scripts at packages/core after the rename (d15159d)
+  - refactor: rename packages/prumo to packages/core (26ee3f5)
+  - feat(invariants,jest): waivers, rule errors, portable locations and count-only prune (0167da4)
+  - feat(speckit): interview questions as self-contained briefs in the configured locale (72a29a3)
+  - fix(gate): find and judge oracles outside the gate root (1bea129)
+  - fix(i18n): PRUMO_LANG decides the detected locale in either direction (644c8a5)
+  - fix(trace): read frozen contracts of packages that own their intents (e7b6eef)
+  - fix(governance): finish moving core intents into the package (d9a32af)
+  - feat(setup): install per selected agent with a checklist and report (28be85d)
+
+## 0.17.1
+
+### Patch Changes
+
+- Automatic version from conventional commits:
+  
+  - fix(docs): package READMEs link to the GitHub docs, not jsDelivr (f951d6d)
+
+## 0.17.0
+
+### Minor Changes
+
+- 6482052: From this version Prumo is proprietary software under the Prumo Software License: free to install and run on your own projects, including commercial ones; only IHELPEE may make money from Prumo itself. Earlier versions keep the license they were published with (MIT or Apache-2.0).
+
+### Patch Changes
+
+- fd22eb2: oracle-isolation follows literal imports through local helpers and resolves `package.json` subpath imports (`#x`): a test that reaches `src/` through either is now reported as a mirror (R gate-isolation-transitive).
+
 ## 0.16.0
 
 ### Minor Changes
@@ -95,7 +167,7 @@
     existentes parseiam byte-idênticos (golden CA-P5).
   - Regras da camada via `rule()` (C12): `evidence-anchored-claims`,
     `case-anchored-intents`, `provenance-required` — cada uma com burla
-    plantada no fixture `fabric-burla` (padrão C03).
+    plantada no fixture `fabric-rule-evasion` (padrão C03).
   - Oráculos novos: `check-ledger-migration.ts` (CA-P4 + invariante de escrita
     sob SIGKILL), `check-intent-tags.ts` (CA-P5 + anti-burla),
     `check-contracts-golden.ts` (CP 1/2 congelados).
@@ -115,10 +187,10 @@
   - Léxico fechado de jargão versionado (`oracle/jargon-lexicon.txt`) + lei
     `layperson-projection-no-jargon` (error): regiões `prumo:jargon-scan:start|end`
     dos catálogos i18n não podem conter termo do léxico (verificação lexical, não
-    subjetiva). Burla plantada em `fixtures/fabric-burla` (pega); controle
-    negativo em `fixtures/fabric-claims-verde` (legenda limpa não é pega).
+    subjetiva). Burla plantada em `fixtures/fabric-rule-evasion` (pega); controle
+    negativo em `fixtures/provenance-clean-claims` (legenda limpa não é pega).
   - i18n dia 1: bloco `status.stakeholder` em `en` + `pt-BR` (paridade
-    `check-i18n`). Intent novo `.prumo/intent/projecoes_perfil.md` (C36).
+    `check-i18n`). Intent novo `packages/prumo/.prumo/intent/projecoes_perfil.md` (C36).
   - Oráculo `oracle/check-perfil-projection.ts` (CA-B1/B2/B3 + anti-burla +
     não-vacuidade) registrado no agregador.
   
@@ -153,7 +225,7 @@
     (corrige o default silencioso no `submit`); o default atual
     (`defaultOptionIndex`) permanece **byte-idêntico** para CI/`--batch` (CA-C3).
   - i18n dia 1: bloco `interview` em `en` + `pt-BR` (paridade `check-i18n`).
-    Intent novo `.prumo/intent/interview_continuo.md` (C36).
+    Intent novo `packages/prumo/.prumo/intent/interview_continuo.md` (C36).
   - Oráculo `oracle/check-interview.ts` (CA-C1/C2/C3: golden analyze/submit →
     artefatos, `tools/list` byte-idêntico, memória, delta, papel, não-vacuidade)
     registrado no agregador.
@@ -181,7 +253,7 @@
     - `pacoteEvidencia` (etapa 11) — só apresentação; o veredito é ECO do report
       do gate (com `ranAt`) ou `null`, nunca recalculado nem atenuado (CA-D2).
   - **CLI `prumo orient`** + **tool MCP `prumo_orient`**: cada um com intent
-    obrigatório (`.prumo/intent/orquestracao_fluxo.md`) e oráculo
+    obrigatório (`packages/prumo/.prumo/intent/orquestracao_fluxo.md`) e oráculo
     (`oracle/check-orientation.ts`). A lei `orientation-tool-has-oracle` foi
     estendida para vigiar a superfície de condução (intent + oráculo obrigatórios)
     e `no-persisted-projection`/`no-llm-in-assertion` agora cobrem
@@ -213,12 +285,12 @@
   - Isenções: marcação explícita de inferência/premissa; âncora em evidência
     executada COM respaldo (fail-safe CA-E3: ledger ausente/ilegível = sem
     respaldo, conjectura continua finding).
-  - Burla plantada em `fixtures/fabric-burla` (padrão C03) e controle negativo
-    em `fixtures/fabric-claims-verde` (marcada `model`, âncora `executed`
+  - Burla plantada em `fixtures/fabric-rule-evasion` (padrão C03) e controle negativo
+    em `fixtures/provenance-clean-claims` (marcada `model`, âncora `executed`
     respaldada, prosa limpa — nenhum é denunciado).
   - Oráculo `oracle/check-unmarked-claims.ts` (U1 burla pega, U2 controle verde
     com respaldo, U3 fail-safe sem ledger, U4 vacuidade no repo) registrado no
-    agregador. Intent da lei em `.prumo/intent/proveniencia.md` §4.
+    agregador. Intent da lei em `packages/prumo/.prumo/intent/proveniencia.md` §4.
 
 ### Patch Changes
 
@@ -271,14 +343,14 @@
   - 11 invariantes: `mutation-routes-guarded` (R3.1–R3.6, herança transitiva Group.Use/Engine.Use obrigatória), `error-handling-enforced` (R3.7, error) + `error-handling-unchecked` (R3.8, warn heurístico com whitelist `knownErrReturning`), `payload-validation-bound` (R3.9–R3.11, body) + `payload-validation-query` (R3.12, warn), `oracle-no-src`/`src-no-oracle` Go (R2.1–R2.4, R2.7 — resolução por module path, alias/dot/blank cobertos), `oracle-whitebox-test` (R2.5, nativa de Go: `package foo` vs `package foo_test`), `oracle-module-couples-app` (R2.8, fronteira do compilador), `no-cross-feature-import` (R3.13), `monetary-is-integer` (R3.14), `go-toolchain-missing` (R1.4, warn nunca-silencioso) e `go-parse-error` (R1.3).
   - `files` do package.json inclui `go-extractor/` (o bug clássico de empacotamento apontado na spec Python não se repete).
   - Core (patch): o builder de patterns do gate aceita `.go` em `layout.src` (R1.6), espelhando o precedente do `.tsx` do node-next.
-  - Fixture `fixtures/go-app` (drift plantado: rotas desprotegidas, erros engolidos, binding sem tag, oracle importando `internal/`, white-box, go.mod acoplado) + oráculo `oracle/check-go.ts` (golden file do BDD da spec) integrados em `pnpm oracle`.
+  - Fixture `fixtures/gin-sample-app` (drift plantado: rotas desprotegidas, erros engolidos, binding sem tag, oracle importando `internal/`, white-box, go.mod acoplado) + oráculo `oracle/check-go.ts` (golden file do BDD da spec) integrados em `pnpm oracle`.
 - 4452661: feat(plugin-node-next): pacote oficial `@ihelpee/prumo-plugin-node-next` (Fases 0–3 da spec `docs/especificacao-prumo-node-next.md`).
   
   - Extractor `NextModel` (ts-morph, version 1): directive prologue canônico (CA-6 / TS #64033 — `import type` encerra o prologue), mapeamento de Route Handlers, Server Actions (arquivo e inline) e Server Components; `envReads`, `importsServerOnly`, `authCallLine`/`mutationLine`/`inputValidated` por função; `isProxy` cobre `middleware.ts` e `proxy.ts` (Next 16).
   - 5 invariantes `error`: `server-action-mutation-guarded` (CA-1), `client-boundary-leak-prevented` (CA-2, com trilha), `server-action-input-validated` (CA-3), `middleware-not-sole-auth` (CA-4), `next-public-env-not-secret` (CA-5). Guard delegado a DAL `server-only` não é falso positivo.
   - CLI: `prumo plugin node-next` no catálogo.
   - Core (patch): o builder de patterns do gate agora inclui `.tsx` e aceita entradas de arquivo (`middleware.ts`/`proxy.ts`), espelhando o `walk()` default do core — sem isso o App Router nunca era lido.
-  - Fixtures `next-app`/`next-proxy` + oráculo `oracle/check-next.ts` (golden file da spec §9, CA-1..CA-8) integrados em `pnpm oracle`.
+  - Fixtures `app-router-sample`/`proxy-sample` + oráculo `oracle/check-next.ts` (golden file da spec §9, CA-1..CA-8) integrados em `pnpm oracle`.
 - 15e4c66: refinamento(plugin-python-fastapi): não-bloqueantes da homologação do PR #53 (parecer `ihelpee/prumo#53#issuecomment-1566`).
   
   - **R3.6 (downgrade Pydantic v1)** — o flag `pydantic_v1` do extractor agora é consumido pela lei: arquivos com `import pydantic.v1` têm a ausência de constraint no body DTO reportada pela regra irmã `dto-has-validation-pydantic-v1` (warn), não mais como `error` — v1 está deprecado e a equipe pode estar em migração. Partição keyed no arquivo do model (onde vivem `@validator`/`Field(regex=...)` v1). Fixture `app/legacy/` no golden file trava o downgrade e os anti-falsos-positivos (`@validator` v1 e `Field(regex=...)` v1 reconhecidos como constraint).
@@ -290,7 +362,7 @@
   - `runPythonExtractor` (`src/ast.ts`): spawn `python3` com timeout 15s (R1.5), `python3` ausente → modelo vazio com motivo explícito e regras no-op (R1.4), walk `.py` determinístico do core (R1.6), lotes de argv.
   - 8 invariantes: `mutation-routes-guarded` (R3.1–R3.4, com resolução cross-file de `include_router` — a camada que mais gera falso-negativo), `dto-has-validation` Pydantic (R3.5–R3.7), `route-has-response-model` (warn, R3.8), `no-cross-feature-import` (warn, R3.9), `monetary-is-integer` (warn, R3.10), `oracle-no-src` (A LEI traduzida: espelho estático + burla importlib; entrypoint `app.main` permitido — oráculo black-box por ASGI), `src-no-oracle` (R2.7) e `python-parse-error` (nunca silencioso).
   - Distribuição (spec §4.2): plugin npm com o `.py` embutido em `files` (lei única no core Node; NUNCA pacote PyPI); `engines.python: ">=3.9"`; registro no catálogo `prumo plugin`.
-  - Fixture `fixtures/python-app/` (drift plantado: rota desprotegida, DTO sem constraint, espelho com importlib, produção importando fixture, SyntaxError) + oráculo `oracle/check-python.ts` (golden file das R's da spec) integrados em `pnpm oracle`.
+  - Fixture `fixtures/fastapi-sample-app/` (drift plantado: rota desprotegida, DTO sem constraint, espelho com importlib, produção importando fixture, SyntaxError) + oráculo `oracle/check-python.ts` (golden file das R's da spec) integrados em `pnpm oracle`.
 - d9d8393: fix(setup): `.prumo/.gitignore` scaffoldado passa a escrever a exceção `!badge.svg`, garantindo que `.prumo/badge.svg` (badge commitável do `prumo badge`) nunca seja ignorado por engano (spec prumo badge §6.2). A forma funcional é relativa ao diretório do próprio `.gitignore`; a literal `!.prumo/badge.svg` do spec seria padrão morto num `.gitignore` aninhado.
 
 ## 0.8.2

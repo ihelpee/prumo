@@ -12,11 +12,11 @@ It resolves relative specifiers, tsconfig/jsconfig `paths`/`baseUrl` (nearest co
 `extends`), literal `import()`/`require()` (template literals included), `jest.mock`/`vi.mock`
 and their `requireActual`/`importActual` variants, and loaders made with `createRequire`.
 
-- Code: `checkOracleIsolation` in `packages/prumo/src/cli/checks.ts`; `extractImports` in
-  `packages/prumo/src/invariants/ast.ts`.
+- Code: `checkOracleIsolation` in `packages/core/src/cli/checks.ts`; `extractImports` in
+  `packages/core/src/invariants/ast.ts`.
 - Reproduce:
   ```bash
-  pnpm fixture:gate                       # fixtures/nest-drift: mirrors=1 clean=1, FAIL
+  pnpm --filter @ihelpee/prumo-plugin-node-nest fixture:drift-sample:gate # package Nest fixture: mirrors=1 clean=1, FAIL
   npx tsx oracle/check-isolation-alias.ts # 8 mirror shapes, 1 opaque import, 1 clean file
   ```
 
@@ -30,11 +30,11 @@ directory.
 
 ## 2. OII is an intersection of criteria, not an average
 
-- Code: `computeOii` in `packages/prumo/src/cli/oii.ts`; `computeOiiScore` in
-  `packages/prumo/src/core/ledger.ts` (an empty suite scores 0, not 100%).
+- Code: `computeOii` in `packages/core/src/cli/oii.ts`; `computeOiiScore` in
+  `packages/core/src/core/ledger.ts` (an empty suite scores 0, not 100%).
 - Reproduce:
   ```bash
-  node packages/prumo/dist/bin.js gate --root fixtures/nest-drift --config prumo.config.ts
+  node packages/core/dist/bin.js gate --root packages/plugin-node-nest/fixtures/drift-sample --config prumo.config.ts
   ```
   Measured: `OII 0% 0/2`, `isolation 1 · provenance 0`. One of two files passes isolation, and
   the score is still 0 because criterion 2 rejects both. An average would give 25%.
@@ -43,7 +43,7 @@ Criterion 2 is anchored on **content**: the anchor of a test is the oldest commi
 blob it had when it was last added, under any path. Deleting a test and re-adding the identical
 file, or `git mv`, keeps the original provenance. A re-add with changed content anchors anew.
 
-- Code: `provenanceAnchors` in `packages/prumo/src/core/git.ts`.
+- Code: `provenanceAnchors` in `packages/core/src/core/git.ts`.
 - Reproduce: `npx tsx oracle/check-provenance-anchor.ts` (both tricks; only the honest test counts).
 
 Criterion 2 still depends on the environment: a shallow clone or a missing `.git` changes the
@@ -52,21 +52,21 @@ number (no `.git` drops the criterion and inflates it). For that reason the orac
 
 ## 3. Only `error` blocks; `--fail-on-warn` changes the exit code, not the verdict
 
-- Code: `statusFromFindings` in `packages/prumo/src/core/types.ts`; verdict and exit code in
-  `packages/prumo/src/cli/runner.ts` and `cli.ts`.
+- Code: `statusFromFindings` in `packages/core/src/core/types.ts`; verdict and exit code in
+  `packages/core/src/cli/runner.ts` and `cli.ts`.
 - Reproduce: on a project whose only finding is a `warn` (e.g. `family-drift`),
   `prumo gate` exits 0 and `prumo gate --fail-on-warn` exits 1, both with `verdict: PASS`.
 
 ## 4. Waivers require reason, expiry and approver
 
-- Code: `loadWaivers` and `matchWaiver` in `packages/prumo/src/core/waivers.ts`; application in
-  `packages/prumo/src/invariants/engine.ts`.
+- Code: `loadWaivers` and `matchWaiver` in `packages/core/src/core/waivers.ts`; application in
+  `packages/core/src/invariants/engine.ts`.
 - Behavior: entries missing `rule`, `target`, `reason`, `expires` or `approvedBy` are dropped;
   expired waivers stop exempting and the target is reported again.
 
 ## 5. Framework invariants find planted drift
 
-`fixtures/nest-drift` plants drift file by file (each marked in a comment). Measured:
+`packages/plugin-node-nest/fixtures/drift-sample` plants drift file by file (each marked in a comment). Measured:
 
 | Rule | Findings |
 |---|---|
@@ -77,21 +77,21 @@ number (no `.git` drops the criterion and inflates it). For that reason the orac
 | `guards-resolve` | 1 |
 | `family-drift` (warn) | 3 |
 
-- Reproduce: `pnpm fixture:gate`. Expected counts are asserted in `oracle/fixture-expectations.ts`.
-- The same rules load in a `"type": "commonjs"` project: `fixtures/nest-cjs`, asserted by
+- Reproduce: `pnpm --filter @ihelpee/prumo-plugin-node-nest fixture:drift-sample:gate`. Expected counts are asserted in `oracle/fixture-expectations.ts`.
+- The same rules load in a `"type": "commonjs"` project: `packages/plugin-node-nest/fixtures/commonjs-sample`, asserted by
   `oracle/check-loader.ts` (`rules=7 ranRules=7`).
-- Other stacks: `pnpm oracle --scope next|php|python|go` (PHP, Python and Go need their toolchains).
+- Other stacks: `pnpm oracle --scope next`.
 
 `family-drift` compares files in the same feature directory by line-shingle Jaccard similarity,
 threshold 0.6. On the fixture, a real family scores 0.73 and unrelated files about 0.02.
 
 ## 6. Loop detection
 
-- Code: `packages/prumo/src/core/repetition.ts` (defaults `minRepeats: 4`, `maxPeriod: 24`).
+- Code: `packages/core/src/core/repetition.ts` (defaults `minRepeats: 4`, `maxPeriod: 24`).
 - Reproduce:
   ```bash
-  printf 'x\nx\nx\nx\n' | node packages/prumo/dist/bin.js loopcheck   # loop, exit 1
-  printf 'x\nx\nx\n'    | node packages/prumo/dist/bin.js loopcheck   # no loop, exit 0
+  printf 'x\nx\nx\nx\n' | node packages/core/dist/bin.js loopcheck   # loop, exit 1
+  printf 'x\nx\nx\n'    | node packages/core/dist/bin.js loopcheck   # no loop, exit 0
   pnpm oracle:loop                                                    # real cases in oracle/loop-cases/
   ```
 - Limit: only cycles at the end of the input, up to `--max-period` lines, are detected.
@@ -119,7 +119,7 @@ they count as provenance gaps again. The previous `100%` was produced by that re
 
 ## 9. Skills declare forbidden reads
 
-- Code: `packages/prumo/src/skills/definitions.ts` (`forbiddenReads` per skill); shape asserted by
+- Code: `packages/core/src/skills/definitions.ts` (`forbiddenReads` per skill); shape asserted by
   `oracle/check-skills.ts`.
 - Limit: barriers are **declared**. They are enforced only through a harness hook; see
   [harness.md](harness.md).
@@ -129,7 +129,7 @@ they count as provenance gaps again. The previous `100%` was produced by that re
 `prumo status`, `prumo orient` and their MCP tools never write files and never change a gate
 verdict.
 
-- Code: `packages/prumo/src/core/status.ts`, `orientation.ts`.
+- Code: `packages/core/src/core/status.ts`, `orientation.ts`.
 - Reproduce: `npx tsx oracle/check-fabric-status.ts`, `npx tsx oracle/check-orientation.ts`.
 
 ## External validation
@@ -167,7 +167,7 @@ boilerplate, mostly `auth-*` providers importing `auth`). It enforces an archite
 apps do not follow; treat it as a policy to opt into. `mutation-routes-guarded` cannot tell a
 deliberately public route without `@Public()`.
 
-**Not validated:** PHP/Laravel, Python/FastAPI and Go/Gin plugins on real projects; projects with
+**Not validated:** projects with
 oracle suites written to Prumo's model (none of the four has one).
 
 ## What does not exist

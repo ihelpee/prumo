@@ -9,7 +9,7 @@ enxergam.
 [![npm](https://img.shields.io/npm/v/@ihelpee/prumo?label=npm)](https://www.npmjs.com/package/@ihelpee/prumo)
 [![License](https://img.shields.io/badge/License-proprietary-lightgrey.svg)](LICENSE)
 
-[English](README.md) · A documentação detalhada em `docs/` é em inglês.
+[English](README.md) · A documentação detalhada é em inglês.
 
 ## O problema
 
@@ -57,6 +57,15 @@ npx prumo gate           # exit 1 em falha; --json para CI
 ```
 
 Node ≥ 20.11. Sem etapa de build: o `prumo.config.ts` é carregado direto, em projetos ESM ou
+
+### Instalar com um agente de IA
+
+Peça ao seu agente:
+
+> Instale o Prumo neste projeto: https://github.com/ihelpee/prumo
+
+O agente segue o [guia de instalação](docs/agent-install.pt-BR.md): ele pede confirmação antes de
+escrever configuração de agente e hooks, e nunca aprova regras por você.
 CommonJS.
 
 ## O que é verificado
@@ -80,7 +89,7 @@ O gate não usa LLM e não envia telemetria.
 - Proveniência git é sinal de higiene de commits, não prova.
 - Teste de mutação (a evidência mais forte) vem desligado por padrão.
 - As barreiras de leitura das skills só valem com hook na IDE.
-- Todo plugin de framework é `experimental`: as regras de Nest e Next foram conferidas em quatro repositórios públicos; Laravel, FastAPI e Go/Gin em nenhum ([validação externa](docs/verification.md#external-validation)).
+- Todo plugin de framework é `experimental`: as regras de Nest e Next foram conferidas em quatro repositórios públicos ([validação externa](docs/verification.md#external-validation)).
 
 ## Configuração
 
@@ -132,22 +141,25 @@ Instale a mesma versão do core; todos os pacotes são lançados juntos.
 
 | Pacote | Adiciona |
 |---|---|
-| `@ihelpee/prumo-plugin-node-nest` | NestJS: guards (decorators, APP_GUARD, middleware de auth), validação de DTO, exports de módulo, fronteiras de feature |
-| `@ihelpee/prumo-plugin-node-next` | Next.js App Router: auth em Server Actions, vazamento de fronteira client, validação de entrada, segredos `NEXT_PUBLIC` |
-| `@ihelpee/prumo-plugin-node-jest` | Jest: análise de mock tautológico, auditoria de testes redundantes |
-| `@ihelpee/prumo-plugin-php-laravel` | Laravel: rotas protegidas, FormRequest, SQL parametrizado |
-| `@ihelpee/prumo-plugin-python-fastapi` | FastAPI: dependências de auth, validação Pydantic |
-| `@ihelpee/prumo-plugin-go-gin` | Gin: guards de rota, tratamento de erro, binding de payload |
-| `@ihelpee/prumo-i18n-pt-br` | saída em português do Brasil |
+| [`@ihelpee/prumo-plugin-node-nest`](packages/plugin-node-nest/README.md) | NestJS: guards (decorators, APP_GUARD, middleware de auth), validação de DTO, exports de módulo, fronteiras de feature |
+| [`@ihelpee/prumo-plugin-node-next`](packages/plugin-node-next/README.md) | Next.js App Router: auth em Server Actions, vazamento de fronteira client, validação de entrada, segredos `NEXT_PUBLIC` |
+| [`@ihelpee/prumo-plugin-node-jest`](packages/plugin-node-jest/README.md) | Jest: análise de mock tautológico, auditoria de testes redundantes |
+| [`@ihelpee/prumo-i18n-pt-br`](packages/i18n-pt-br/README.md) | saída em português do Brasil |
+
+**Plugin de motor TypeScript** — modelo de código e planejamento de mutações usados pelo core:
+
+| Pacote | Adiciona |
+|---|---|
+| [`@ihelpee/prumo-plugin-typescript`](packages/plugin-typescript/README.md) | provedor de AST TypeScript e planejador de mutações; não adiciona regras de framework |
 
 **Plugins de fluxo de trabalho (experimentais)** — fluxo do agente em volta do gate, fora do
 veredito dele. As interfaces podem mudar entre versões minor:
 
 | Pacote | Adiciona |
 |---|---|
-| `@ihelpee/prumo-plugin-speckit` | entrevistador de especificação e fluxo de planejamento Prompt Zero |
-| `@ihelpee/prumo-plugin-pipeline` | timeline de fases e preflight para mutações em issues do GitHub |
-| `@ihelpee/prumo-plugin-github-project` | cliente de GitHub Projects/Issues (usado pelo pipeline) |
+| [`@ihelpee/prumo-plugin-speckit`](packages/plugin-speckit/README.md) | entrevistador de especificação e fluxo de planejamento Prompt Zero |
+| [`@ihelpee/prumo-plugin-pipeline`](packages/plugin-pipeline/README.md) | timeline de fases e preflight para mutações em issues do GitHub |
+| [`@ihelpee/prumo-plugin-github-project`](packages/plugin-github-project/README.md) | cliente de GitHub Projects/Issues (usado pelo pipeline) |
 
 ## Comandos
 

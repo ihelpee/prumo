@@ -17,7 +17,7 @@
 ## 1. Context and problem
 
 The OII (Oracle Independence Index) is today the intersection of two active criteria
-(`packages/prumo/src/cli/oii.ts:71-76`):
+(`packages/core/src/cli/oii.ts:71-76`):
 
 | # | Criterion | Source | Cheatable? | Status |
 |---|---|---|---|---|

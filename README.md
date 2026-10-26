@@ -57,6 +57,15 @@ npx prumo gate           # exit 1 on failure; --json for CI
 
 Node ≥ 20.11. No build step: `prumo.config.ts` is loaded directly, in ESM or CommonJS projects.
 
+### Install with an AI agent
+
+Ask your agent:
+
+> Install Prumo in this project: https://github.com/ihelpee/prumo
+
+The agent follows [agent-install](docs/agent-install.md): it asks before writing agent
+configuration and hooks, and it never approves rules for you.
+
 ## What it checks
 
 | Check | What it catches | Blocks |
@@ -78,7 +87,7 @@ The gate uses no LLM and sends no telemetry.
 - Git provenance is a commit-hygiene signal, not proof.
 - Mutation testing (the strongest evidence) is off by default.
 - Skill read barriers are enforced only with an IDE hook.
-- Every framework plugin is `experimental`: Nest and Next rules were checked on four public repositories, Laravel, FastAPI and Go/Gin on none ([external validation](docs/verification.md#external-validation)).
+- Every framework plugin is `experimental`: Nest and Next rules were checked on four public repositories ([external validation](docs/verification.md#external-validation)).
 
 ## Configure
 
@@ -129,22 +138,25 @@ Install the same version as the core; all packages release in lockstep.
 
 | Package | Adds |
 |---|---|
-| `@ihelpee/prumo-plugin-node-nest` | NestJS: guards (decorators, APP_GUARD, auth middleware), DTO validation, module exports, feature boundaries |
-| `@ihelpee/prumo-plugin-node-next` | Next.js App Router: Server Action auth, client boundary leaks, input validation, `NEXT_PUBLIC` secrets |
-| `@ihelpee/prumo-plugin-node-jest` | Jest: mock tautology analysis, redundant-test audit |
-| `@ihelpee/prumo-plugin-php-laravel` | Laravel: guarded routes, FormRequest, parameterized SQL |
-| `@ihelpee/prumo-plugin-python-fastapi` | FastAPI: auth dependencies, Pydantic validation |
-| `@ihelpee/prumo-plugin-go-gin` | Gin: route guards, error handling, payload binding |
-| `@ihelpee/prumo-i18n-pt-br` | Brazilian Portuguese output |
+| [`@ihelpee/prumo-plugin-node-nest`](packages/plugin-node-nest/README.md) | NestJS: guards (decorators, APP_GUARD, auth middleware), DTO validation, module exports, feature boundaries |
+| [`@ihelpee/prumo-plugin-node-next`](packages/plugin-node-next/README.md) | Next.js App Router: Server Action auth, client boundary leaks, input validation, `NEXT_PUBLIC` secrets |
+| [`@ihelpee/prumo-plugin-node-jest`](packages/plugin-node-jest/README.md) | Jest: mock tautology analysis, redundant-test audit |
+| [`@ihelpee/prumo-i18n-pt-br`](packages/i18n-pt-br/README.md) | Brazilian Portuguese output |
+
+**TypeScript engine plugin** — source analysis and mutation planning used by the core:
+
+| Package | Adds |
+|---|---|
+| [`@ihelpee/prumo-plugin-typescript`](packages/plugin-typescript/README.md) | TypeScript AST provider and mutation planner; it does not add framework rules |
 
 **Workflow plugins (experimental)** — agent workflow around the gate, not part of its verdict.
 Their interfaces may change between minor versions:
 
 | Package | Adds |
 |---|---|
-| `@ihelpee/prumo-plugin-speckit` | spec interviewer and Prompt Zero planning flow |
-| `@ihelpee/prumo-plugin-pipeline` | phase timeline and preflight checks for GitHub issue mutations |
-| `@ihelpee/prumo-plugin-github-project` | GitHub Projects/Issues client (used by pipeline) |
+| [`@ihelpee/prumo-plugin-speckit`](packages/plugin-speckit/README.md) | spec interviewer and Prompt Zero planning flow |
+| [`@ihelpee/prumo-plugin-pipeline`](packages/plugin-pipeline/README.md) | phase timeline and preflight checks for GitHub issue mutations |
+| [`@ihelpee/prumo-plugin-github-project`](packages/plugin-github-project/README.md) | GitHub Projects/Issues client (used by pipeline) |
 
 ## Commands
 

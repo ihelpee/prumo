@@ -45,13 +45,16 @@ merged key by key. Precedence: defaults < `preset` in the file < the file < `--p
 | `layout.context` | `.prumo/intent`, `.cursor/rules`, … | dirs scanned by `context-integrity` (root `CLAUDE.md`, `AGENTS.md`, `.cursorrules` are always included) |
 | `testFilePatterns` | `**/*.spec.ts`, `**/*.test.ts`, `**/*.e2e-spec.ts`, `test/**/*.ts`, `oracle/**/*.ts` | the OII denominator. Oracle files under `oracle/` count even without a `.spec`/`.test` suffix |
 | `ignore` | `[]` | globs excluded from every check |
-| `plugins` | `[]` | framework plugins (rules, extractors, CLI commands, skills) |
+| `plugins` | `[]` | framework plugins (rules, extractors, CLI commands, skills). The TypeScript engine, `@ihelpee/prumo-plugin-typescript`, gives the rules and checks the source model (AST) and the mutation planner. The `setup` template includes it. Without it, a rule that needs source data does not run and the gate reports `ast-provider-missing` |
 | `invariants` | — | inline rules, merged with plugin rules and rule files |
 | `onDuplicateRule` | `'error'` | `error` \| `project-wins` \| `plugin-wins` when two sources define the same rule id |
 | `typecheckCommand` | — | run with `sh` at the root; absent → `typecheck` skips |
 | `testCommand` | — | used only by the mutation engine |
 | `oii.profile` | `'standard'` | `fast` \| `standard` \| `strict` (see [concepts.md](concepts.md#oracle-independence-index-oii)) |
-| `budget` | `{ enabled: true, minOii: 0.35, minOiiDelta: 0 }` | OII floor and growth rule. Optional `minIntentCoverage` (0..1) turns low intent coverage into a `trace` error |
+| `budget` | `{ enabled: true, minOii: 0.35, minOiiDelta: 0 }` | OII floor and growth rule. Optional `minIntentCoverage` (0..1) turns low intent coverage into a `trace` error; optional `minContextCoverage` (0..1) turns low context coverage into a `context-integrity` error |
+| `approval` | `{ profile: 'standard' }` | how a contract freeze proves a person approved it: `standard` (default) asks the person to type the approver's name at the terminal; `fast` records the freeze as unverified and the gate warns (`approval-unverified`); `strict` is not available in the core |
+| `pluginConcurrency` | cores − 1, at least 1 | how many plugin processes run at once in a dispatch. Plugins run together and one failure never cancels the others |
+| `contextCoverage` | — | which folders count for context coverage: `include` keeps only the folders matched, `exclude` drops them. Globs over project-relative paths; a plain path also covers the folders inside it. Without it, the default folders count, up to two levels deep |
 | `failOnWarn` | `false` | exit 1 on `warn` findings; `--fail-on-warn` overrides |
 | `mutation` | on in CI when `testCommand` is set, off locally | delta mutation engine (`CI` env var decides the default): `enabled`, `base`, `timeoutMs` (5000), `maxMutants` (30), `maxPerFile` (10), `perMutantTimeoutMs` (2000), `operators` |
 | `testAudit` | `{ enabled: true, failOnRedundant: false }` | redundant-test audit. The engine comes from a plugin (e.g. `plugin-node-jest`); without one, `test-redundancy` skips |
@@ -80,15 +83,15 @@ Presets:
 | Check | What it does | Blocks on |
 |---|---|---|
 | `typecheck` | runs `typecheckCommand` | non-zero exit |
-| `oracle-isolation` | test files importing `layout.src` (relative, tsconfig `paths`/`baseUrl`, literal `import()`/`require()`); `src` importing test code; non-literal dynamic imports (warn) | `oracle-no-src`, `src-no-oracle` |
+| `oracle-isolation` | test files importing `layout.src` (relative, tsconfig `paths`/`baseUrl`, literal `import()`/`require()`); `src` importing test code; non-literal dynamic imports (warn). Needs the TypeScript plugin for the source model | `oracle-no-src`, `src-no-oracle`, `ast-provider-missing` |
 | `contract-frozen` | every contract matches the hash in `freeze-ledger.json`; contract files added in a commit that also touched `src/` (warn); unfrozen contracts (warn). `_draft/`, `_observed/` and `_ratified/` are not contracts | a contract changed after its freeze |
 | `trace` | intent rule ↔ frozen contract ↔ oracle; missing links warn | a contract citing an undeclared rule; coverage below `budget.minIntentCoverage` |
 | `intent-schema` | intent frontmatter (`id`, `owner`, `status`), unique intent ids, `R-<domain>-NNN` rule ids unique and well formed | any violation |
-| `context-integrity` | broken paths and case mismatches in AI context files | errors |
+| `context-integrity` | broken paths and case mismatches in AI context files; coverage below `budget.minContextCoverage` | errors |
 | `harness-policy` | harness meta missing or stale; `prumoVersion` mismatch | version mismatch |
 | `test-redundancy` | tests that only re-check the framework | when `failOnRedundant` |
-| `invariants` | all rules from plugins, inline config and rule files | `error` findings |
-| `mutation` | delta mutation (when enabled) | per preset |
+| `invariants` | all rules from plugins, inline config and rule files. A rule that needs source data runs only with the TypeScript plugin | `error` findings, `ast-provider-missing` |
+| `mutation` | delta mutation (when enabled). The operators come from the TypeScript plugin; without it the check skips with a reason | per preset |
 | `provenance` | OII breakdown; lists `provenance-gap` files not covered by a waiver | — (warn) |
 | *extension* | each `config.checks` entry, under its own id | its `error` findings |
 | `budget` | OII floor and growth rule | below floor, or growth without OII growth |
@@ -193,7 +196,7 @@ the expiry date, at the rule's own severity. Active waivers are reported as
 | `prumo findings` | list promotable findings; `--promote <id>` writes a rule |
 | `prumo status` | read-only next-step orientation. `--json`, `--as engineer\|stakeholder\|qa\|po` |
 | `prumo orient` | read-only end-to-end flow (stage, plan, evidence) |
-| `prumo setup` | install skills, MCP config, scaffold `.prumo/`, Cursor hooks when `.cursor/` exists |
+| `prumo setup` | checklist of agents (or `--target`): skills, MCP config, instructions block, hooks where the agent has them; scaffold `.prumo/` |
 | `prumo harness sync` | refresh skills, hooks and `.prumo/prumo.json` after upgrading |
 | `prumo sync` | `harness sync` then `gate` |
 | `prumo interview` | brownfield intent and rule discovery. `--batch`, `--dry-run`, `--interactive` |
@@ -208,7 +211,7 @@ the expiry date, at the rule's own severity. Active waivers are reported as
 | `prumo badge` | SVG badge from the last report (see below) |
 | `prumo doctor` | environment diagnosis: Node, config, versions, harness, plus the checks each active plugin contributes (e.g. `php`, `python3`) |
 | `prumo check` / `budget` / `drift` / `coverage` / `fix` | AI context file audits |
-| `prumo test-audit` | find redundant tests (needs a plugin that provides the audit engine) |
+| `prumo node-jest test-audit` | find redundant tests (needs `@ihelpee/prumo-plugin-node-jest`; `prumo test-audit` remains available as a root alias) |
 | `prumo loopcheck` | detect degenerate repetition at the end of stdin |
 | `prumo plugin [name]` | inspect available plugins |
 | `prumo mcp` | stdio MCP server for IDEs. Agent tools: `prumo_start`, `prumo_gaps`, `prumo_allowed`, `prumo_trace`, `prumo_intent_init` (writes a draft, never approves), `prumo_contract_draft`, plus `prumo_gate`, `prumo_status`, `prumo_orient`, `prumo_interview` and the context and test-audit tools. No MCP tool approves an intent or freezes a contract |
@@ -231,6 +234,10 @@ npx prumo loopcheck --json --min-repeats 6 --max-period 40 < agent-output.txt
 Flags a block of up to `--max-period` lines (default 24) repeated at least `--min-repeats` times
 (default 4) **at the end** of the input. Repetition in the middle is not a loop. A cycle longer
 than `--max-period` is invisible. Exit 1 on loop.
+
+## Plugin timeouts
+
+Each plugin process has a timeout. The value is taken from the first of these that is set: the project config (`plugins: [{ id, transport: 'jsonl-v2', timeoutMs }]`), the plugin's own `prumo.timeoutMs` in its `package.json`, or 120 000 ms. A plugin that exceeds it is a technical error for that plugin only; the other plugins still report.
 
 ## Intent to contract
 
@@ -269,8 +276,7 @@ export default defineConfig({
 ```
 
 `prumo contract extract` writes `_observed/nest-dto/…`; `prumo contract ratify nest-dto <name>`
-copies one to `_ratified/`; `prumo contract freeze <name> --by <person>` freezes it. The Python
-and Laravel plugins export `pydanticInterfaces` and `formRequestInterfaces`.
+copies one to `_ratified/`; `prumo contract freeze <name> --by <person>` freezes it.
 
 Agents: `prumo harness sync` installs hooks for every detected editor.
 
@@ -338,4 +344,4 @@ To publish the OII badge, run `prumo gate` then `prumo badge` in a job on `main`
   `@ihelpee/prumo-plugin-jest` → `@ihelpee/prumo-plugin-node-jest`.
 - All `@ihelpee/prumo*` packages are versioned in lockstep: install the same version of the core
   and every plugin. After upgrading, run `npx prumo harness sync`.
-- Per-release details: [packages/prumo/CHANGELOG.md](../CHANGELOG.md).
+- Per-release details: [Core package changelog](../CHANGELOG.md).

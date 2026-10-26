@@ -2,7 +2,7 @@
 
 Prumo skills are defined by what the agent **must not read**. The gate mechanically enforces one
 barrier: tests must not import `src/**`. Every other read barrier (`forbiddenReads` in
-`packages/prumo/src/skills/definitions.ts`) is declared, listed by `prumo_skills`, and enforced
+`packages/core/src/skills/definitions.ts`) is declared, listed by `prumo_skills`, and enforced
 only if you install a harness.
 
 Without enforcement, greenfield work is fragile; guardrail and brownfield use still get value
@@ -20,7 +20,27 @@ from the gate.
 
 ## What `prumo setup` installs
 
-When a `.cursor/` directory exists, `prumo setup` copies and merges:
+`prumo setup` shows a checklist of agent environments. Agents already present in the repo start
+checked; toggle them by number (`2` or `1,3`), `a` for all, `n` for none, Enter to confirm. With
+`-y` or `--target`, no prompt runs: `--target` takes `agents`, `cursor`, `claude`, `codex`,
+`gemini`, `all`; without it, every detected agent is used (`agents` when none is).
+
+Each selected agent gets what it can take. Where an agent has no hook API, it still gets skills,
+the MCP entry and the instructions block:
+
+| Agent | Skills | MCP entry | Hooks | Instructions |
+|---|---|---|---|---|
+| `cursor` | `.cursor/skills` | `.cursor/mcp.json` | `.cursor/hooks.json` | `.cursor/rules/prumo-foreman.mdc` |
+| `claude` | `.claude/skills` | `.mcp.json` | `.claude/settings.json` | `CLAUDE.md` block |
+| `codex` | `.agents/skills` | `.codex/config.toml` | none | `AGENTS.md` block |
+| `gemini` | `.gemini/skills` | `.gemini/settings.json` | none | `GEMINI.md` block |
+| `agents` | `.agents/skills` | `.mcp.json` | none | `AGENTS.md` block |
+
+The instructions block is a short `<!-- prumo:begin -->` section in the file. Only the text between
+the markers is rewritten on each run; the rest of the file is yours. The skill and MCP entries are
+Prumo-owned and overwritten.
+
+When a `.cursor/` directory exists and `cursor` is selected, `prumo setup` also copies and merges:
 
 | File | Role |
 |---|---|
